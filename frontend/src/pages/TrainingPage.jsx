@@ -12,18 +12,18 @@ export default function TrainingPage() {
   const handleTrain = async () => {
     setStatus('running');
     setMessage('Initializing pure NumPy pipeline (Preprocessing -> XGBoost FS -> ANN/DNN/RNN/SVM-CSA/CSA-PSO)...');
-    
+
     try {
-      const response = await axios.post('http://localhost:8000/api/train', {
+      const response = await axios.post('https://nids-project-jhwp.onrender.com/api/train'), {
         dataset_name: dataset
       });
-      
+
       if (response.data.status === 'running') {
         setMessage('Training job dispatched to backend. This may take a few moments...');
-        
+
         setTimeout(() => {
-            setStatus('success');
-            setMessage('Training complete! Metrics have been calibrated and saved to the database.');
+          setStatus('success');
+          setMessage('Training complete! Metrics have been calibrated and saved to the database.');
         }, 3000);
       }
     } catch (err) {
@@ -35,39 +35,37 @@ export default function TrainingPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-8 pb-10">
       <div className="bg-slate-900/40 backdrop-blur-xl p-10 rounded-3xl border border-indigo-500/20 shadow-[0_10px_40px_rgb(0,0,0,0.3)] relative overflow-hidden">
-        
+
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-cyan-400 via-indigo-500 to-fuchsia-500"></div>
         <div className="absolute -left-32 -top-32 w-64 h-64 bg-fuchsia-600/10 rounded-full blur-[60px] pointer-events-none"></div>
 
         <h2 className="text-2xl font-black text-white mb-8 flex items-center gap-3 drop-shadow-md">
           <div className="p-2 bg-gradient-to-br from-indigo-500 to-cyan-500 rounded-lg shadow-lg">
-             <Database className="text-white" size={24} />
+            <Database className="text-white" size={24} />
           </div>
           Model Training Configuration
         </h2>
-        
+
         <div className="space-y-8 relative z-10">
           <div>
             <label className="block text-sm font-bold text-indigo-300 mb-3 tracking-wide uppercase">Select Target Dataset</label>
             <div className="flex gap-4">
               <button
                 onClick={() => setDataset('NSL-KDD')}
-                className={`flex-1 py-4 px-6 rounded-xl border-2 transition-all duration-300 font-bold ${
-                  dataset === 'NSL-KDD' 
-                    ? 'border-fuchsia-500 bg-gradient-to-br from-fuchsia-900/40 to-indigo-900/40 text-fuchsia-100 shadow-[0_0_20px_rgba(192,38,211,0.3)] scale-[1.02]' 
-                    : 'border-slate-700/50 hover:border-indigo-500/50 text-slate-400 bg-slate-800/30'
-                }`}
+                className={`flex-1 py-4 px-6 rounded-xl border-2 transition-all duration-300 font-bold ${dataset === 'NSL-KDD'
+                  ? 'border-fuchsia-500 bg-gradient-to-br from-fuchsia-900/40 to-indigo-900/40 text-fuchsia-100 shadow-[0_0_20px_rgba(192,38,211,0.3)] scale-[1.02]'
+                  : 'border-slate-700/50 hover:border-indigo-500/50 text-slate-400 bg-slate-800/30'
+                  }`}
               >
                 NSL-KDD
               </button>
               <button
                 onClick={() => setDataset('UNR-IDD')}
-                className={`flex-1 py-4 px-6 rounded-xl border-2 transition-all duration-300 font-bold ${
-                  dataset === 'UNR-IDD' 
-                    ? 'border-cyan-500 bg-gradient-to-br from-cyan-900/40 to-indigo-900/40 text-cyan-100 shadow-[0_0_20px_rgba(34,211,238,0.3)] scale-[1.02]' 
-                    : 'border-slate-700/50 hover:border-indigo-500/50 text-slate-400 bg-slate-800/30'
-                }`}
+                className={`flex-1 py-4 px-6 rounded-xl border-2 transition-all duration-300 font-bold ${dataset === 'UNR-IDD'
+                  ? 'border-cyan-500 bg-gradient-to-br from-cyan-900/40 to-indigo-900/40 text-cyan-100 shadow-[0_0_20px_rgba(34,211,238,0.3)] scale-[1.02]'
+                  : 'border-slate-700/50 hover:border-indigo-500/50 text-slate-400 bg-slate-800/30'
+                  }`}
               >
                 UNR-IDD
               </button>
@@ -109,7 +107,7 @@ export default function TrainingPage() {
               <div className="flex items-center gap-3 font-bold">
                 <CheckCircle2 size={24} className="text-emerald-400" /> {message}
               </div>
-              <button 
+              <button
                 onClick={() => navigate('/')}
                 className="self-start text-sm font-bold bg-emerald-950/50 px-4 py-2 rounded-lg text-emerald-400 hover:text-white hover:bg-emerald-600/50 transition-colors border border-emerald-500/30"
               >
