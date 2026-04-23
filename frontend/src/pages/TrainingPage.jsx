@@ -14,9 +14,12 @@ export default function TrainingPage() {
     setMessage('Initializing pure NumPy pipeline (Preprocessing -> XGBoost FS -> ANN/DNN/RNN/SVM-CSA/CSA-PSO)...');
 
     try {
-      const response = await axios.post('https://nids-project-jhwp.onrender.com/api/train'), {
-        dataset_name: dataset
-      });
+      const response = await axios.post(
+        'https://nids-project-jhwp.onrender.com/api/train',
+        {
+          dataset_name: dataset
+        }
+      );
 
       if (response.data.status === 'running') {
         setMessage('Training job dispatched to backend. This may take a few moments...');
