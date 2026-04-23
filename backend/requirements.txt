@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pymongo
+numpy
+pandas
+scipy
+pydantic
+pytest
+tinydb
