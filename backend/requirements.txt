@@ -2,6 +2,7 @@ fastapi
 uvicorn
 pymongo
 numpy
+scapy
 pandas
 scipy
 pydantic
