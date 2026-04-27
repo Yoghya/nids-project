@@ -18,7 +18,7 @@ export default function MonitorPage() {
 
   const connectWebSocket = () => {
     setWsStatus('connecting');
-    const ws = new WebSocket('ws://localhost:8000/ws/monitor');
+    const ws = new WebSocket('ws://192.168.1.4:8000/ws/monitor');
 
     ws.onopen = () => {
       setWsStatus('connected');

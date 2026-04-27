@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name"> NexusGuard</string>
+    <string name="title_activity_main"> NexusGuard</string>
+    <string name="package_name">com.nids.monitor</string>
+    <string name="custom_url_scheme">com.nids.monitor</string>
+</resources>

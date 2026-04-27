@@ -15,7 +15,7 @@ export default function TrainingPage() {
 
     try {
       const response = await axios.post(
-        'https://nids-project-jhwp.onrender.com/api/train',
+        'http://192.168.1.4:8000/api/train',
         {
           dataset_name: dataset
         }

@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Activity, Database, BarChart3, ShieldAlert, Cpu, Home } from 'lucide-react';
-import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import TrainingPage from './pages/TrainingPage';
 import MonitorPage from './pages/MonitorPage';
 import FeatureAnalysisPage from './pages/FeatureAnalysisPage';
 import OptimizationInsightsPage from './pages/OptimizationInsightsPage';
+import AboutPage from './pages/AboutPage';
 
 const SidebarLink = ({ to, icon: Icon, children }) => {
   const location = useLocation();
@@ -15,14 +15,14 @@ const SidebarLink = ({ to, icon: Icon, children }) => {
   return (
     <Link 
       to={to} 
-      className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
+      className={`flex flex-col md:flex-row items-center gap-1 md:gap-3 p-2 md:px-4 md:py-3 rounded-xl transition-all duration-300 ${
         isActive 
           ? 'bg-gradient-to-r from-fuchsia-600/80 to-indigo-600/80 text-white font-bold shadow-[0_0_15px_rgba(192,38,211,0.5)] border border-fuchsia-400/50' 
-          : 'hover:bg-white/10 text-indigo-200 hover:text-white hover:translate-x-1'
+          : 'hover:bg-white/10 text-indigo-200 hover:text-white md:hover:translate-x-1'
       }`}
     >
       <Icon size={20} className={isActive ? "text-white" : "text-cyan-400"} />
-      {children}
+      <span className="text-[10px] md:text-base text-center md:text-left leading-tight">{children}</span>
     </Link>
   );
 };
@@ -35,20 +35,20 @@ function AppContent() {
       <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-fuchsia-900/30 rounded-full blur-[150px] pointer-events-none"></div>
       <div className="absolute top-[40%] left-[20%] w-[30%] h-[30%] bg-cyan-900/20 rounded-full blur-[100px] pointer-events-none"></div>
 
-      {/* Sidebar - Glassmorphism */}
-      <aside className="w-72 bg-slate-900/40 backdrop-blur-2xl border-r border-indigo-500/20 flex flex-col z-20 shadow-2xl">
+      {/* Desktop Sidebar - Hidden on mobile */}
+      <aside className="hidden md:flex w-72 bg-slate-900/40 backdrop-blur-2xl border-r border-indigo-500/20 flex-col z-20 shadow-2xl">
         <div className="p-8 border-b border-indigo-500/20 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-fuchsia-600/20 z-0"></div>
           <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-400 flex items-center gap-3 relative z-10 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
             <ShieldAlert className="text-fuchsia-500" size={32} />
-            NexusGuard
+            NIDS-Opt
           </h1>
-          <p className="text-xs font-semibold text-indigo-300 mt-2 uppercase tracking-widest relative z-10">Advanced Threat Intelligence</p>
+          <p className="text-xs font-semibold text-indigo-300 mt-2 uppercase tracking-widest relative z-10">IEEE Cloud Security</p>
         </div>
         
         <nav className="flex-1 p-5 space-y-3">
-          <SidebarLink to="/" icon={Home}>Home</SidebarLink>
-          <SidebarLink to="/dashboard" icon={BarChart3}>Dashboard</SidebarLink>
+          <SidebarLink to="/" icon={Home}>Home / About</SidebarLink>
+          <SidebarLink to="/metrics" icon={BarChart3}>Performance Metrics</SidebarLink>
           <SidebarLink to="/training" icon={Activity}>Model Training</SidebarLink>
           <SidebarLink to="/monitor" icon={ShieldAlert}>Packet Monitor</SidebarLink>
           <SidebarLink to="/insights" icon={Activity}>Optimization Insights</SidebarLink>
@@ -65,17 +65,17 @@ function AppContent() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto bg-transparent z-10 relative scroll-smooth custom-scrollbar">
-        <header className="bg-slate-900/30 backdrop-blur-md border-b border-indigo-500/10 px-10 py-5 sticky top-0 z-30 shadow-lg">
-          <h2 className="text-xl font-bold text-indigo-100 flex items-center gap-3">
-            <span className="w-8 h-1 bg-gradient-to-r from-cyan-400 to-fuchsia-500 rounded-full block"></span>
-            Machine Learning-Based Intrusion Detection Platform
+      <main className="flex-1 overflow-auto bg-transparent z-10 relative scroll-smooth custom-scrollbar pb-24 md:pb-0">
+        <header className="bg-slate-900/30 backdrop-blur-md border-b border-indigo-500/10 px-6 py-4 md:px-10 md:py-5 sticky top-0 z-30 shadow-lg">
+          <h2 className="text-lg md:text-xl font-bold text-indigo-100 flex items-center gap-3">
+            <span className="w-6 h-1 md:w-8 bg-gradient-to-r from-cyan-400 to-fuchsia-500 rounded-full block"></span>
+            <span className="truncate">Intrusion Detection Platform</span>
           </h2>
         </header>
-        <div className="p-10 min-h-[calc(100vh-80px)]">
+        <div className="p-4 md:p-10 min-h-[calc(100vh-80px)]">
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/" element={<AboutPage />} />
+            <Route path="/metrics" element={<DashboardPage />} />
             <Route path="/training" element={<TrainingPage />} />
             <Route path="/monitor" element={<MonitorPage />} />
             <Route path="/insights" element={<OptimizationInsightsPage />} />
@@ -83,6 +83,15 @@ function AppContent() {
           </Routes>
         </div>
       </main>
+
+      {/* Mobile Bottom Navigation - Hidden on desktop */}
+      <div className="md:hidden fixed bottom-0 w-full bg-slate-900/80 backdrop-blur-2xl border-t border-indigo-500/30 z-50 px-2 py-2 flex justify-around items-center shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
+         <SidebarLink to="/" icon={Home}>Home</SidebarLink>
+         <SidebarLink to="/metrics" icon={BarChart3}>Metrics</SidebarLink>
+         <SidebarLink to="/monitor" icon={ShieldAlert}>Monitor</SidebarLink>
+         <SidebarLink to="/training" icon={Database}>Train</SidebarLink>
+      </div>
+
     </div>
   );
 }

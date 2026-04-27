@@ -57,8 +57,8 @@ export default function DashboardPage() {
     setIsComparing(true);
     try {
       const [resNsl, resUnr] = await Promise.all([
-        axios.get(`http://localhost:8000/api/metrics/NSL-KDD`),
-        axios.get(`http://localhost:8000/api/metrics/UNR-IDD`)
+        axios.get(`http://192.168.1.4:8000/api/metrics/NSL-KDD`),
+        axios.get(`http://192.168.1.4:8000/api/metrics/UNR-IDD`)
       ]);
       
       const nslData = resNsl.data.status === 'success' ? mapBackendData(resNsl.data.data.metrics) : null;
