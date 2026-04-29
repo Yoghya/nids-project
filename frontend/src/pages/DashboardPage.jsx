@@ -34,6 +34,7 @@ const DatasetSection = ({ datasetName, data }) => {
 export default function DashboardPage() {
   const [comparisonData, setComparisonData] = useState({ nsl_kdd: null, unr_idd: null });
   const [isComparing, setIsComparing] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const mapBackendData = (metrics) => {
     if (!metrics) return null;
@@ -62,6 +63,7 @@ export default function DashboardPage() {
 
   const handleCompare = async () => {
     setIsComparing(true);
+    setErrorMsg(null);
     try {
       const [resNsl, resUnr] = await Promise.all([
         axios.get(`${API_BASE_URL}/api/metrics/NSL-KDD`),
@@ -73,7 +75,8 @@ export default function DashboardPage() {
       
       setComparisonData({ nsl_kdd: nslData, unr_idd: unrData });
     } catch (err) {
-      console.error(err);
+      console.error("Dashboard Sync Error:", err);
+      setErrorMsg(err.message + " (Check console for details)");
     } finally {
       setIsComparing(false);
     }
@@ -141,7 +144,16 @@ export default function DashboardPage() {
         <div className={emptyStateClass}>
           <Database className="w-16 h-16 opacity-30 mb-6 animate-pulse text-cyan-500 drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]" />
           <h3 className="text-2xl font-black text-indigo-300 mb-2 drop-shadow-sm">Metrics Data Absent</h3>
-          <p className="text-slate-400 font-medium">Go to Model Training first or click Live Sync if DB is populated.</p>
+          <p className="text-slate-400 font-medium text-center">
+            Go to Model Training first or click Live Sync if DB is populated.
+            <br/><br/>
+            Current API URL: <span className="text-fuchsia-400 font-mono bg-fuchsia-900/30 px-2 py-1 rounded">{API_BASE_URL}</span>
+          </p>
+          {errorMsg && (
+            <div className="mt-6 p-4 bg-rose-900/40 border border-rose-500/50 rounded-xl text-rose-300 text-sm font-bold">
+              Error fetching data: {errorMsg}
+            </div>
+          )}
         </div>
       )}
     </div>
