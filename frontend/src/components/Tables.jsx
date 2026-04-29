@@ -16,41 +16,52 @@ export const MetricTable = ({ title, metricIndex, data }) => {
   const models = Object.keys(data);
   const classes = ["DoS", "Probe", "R2L"];
 
-  // Format data for Recharts
-  // X-Axis will be the Attack Class, Bars will be the Models
-  const chartData = classes.map(cls => {
-    const row = { name: cls };
-    models.forEach(m => {
-      row[m] = parseFloat((data[m][cls][metricIndex] * 100).toFixed(2));
+  const getMaxInClass = (attackClass) => {
+    let maxVal = -1;
+    models.forEach((m) => {
+      const val = data[m][attackClass][metricIndex];
+      if (val > maxVal) maxVal = val;
     });
-    return row;
-  });
+    return maxVal;
+  };
 
   return (
-    <div className="bg-slate-900/40 backdrop-blur-md p-6 rounded-xl border border-indigo-500/20 shadow-lg">
-      <h4 className="text-sm font-black mb-6 text-fuchsia-400 uppercase tracking-widest drop-shadow-[0_0_8px_rgba(192,38,211,0.5)]">{title} Matrix</h4>
-      <div className="h-80 w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={chartData}
-            margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#4f46e5" opacity={0.2} vertical={false} />
-            <XAxis dataKey="name" stroke="#818cf8" tick={{ fill: '#c7d2fe', fontWeight: 'bold' }} />
-            <YAxis stroke="#818cf8" tick={{ fill: '#c7d2fe' }} domain={[0, 100]} />
-            <Tooltip 
-              cursor={{ fill: '#312e81', opacity: 0.4 }}
-              contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', borderColor: '#6366f1', borderRadius: '0.5rem', color: '#e0e7ff' }}
-              itemStyle={{ fontWeight: 'bold' }}
-            />
-            <Legend wrapperStyle={{ paddingTop: '20px' }} />
-            {models.map(m => (
-              <Bar key={m} dataKey={m} fill={modelColors[m] || "#cbd5e1"} radius={[4, 4, 0, 0]}>
-                <LabelList dataKey={m} position="top" fill="#f8fafc" fontSize={10} fontWeight="bold" formatter={(val) => `${val}%`} />
-              </Bar>
-            ))}
-          </BarChart>
-        </ResponsiveContainer>
+    <div className="bg-slate-900/40 backdrop-blur-md p-5 rounded-xl border border-indigo-500/20 shadow-lg">
+      <h4 className="text-sm font-black mb-4 text-fuchsia-400 uppercase tracking-widest drop-shadow-[0_0_8px_rgba(192,38,211,0.5)]">{title} Matrix</h4>
+      <div className="overflow-x-auto rounded-lg border border-indigo-500/20 custom-scrollbar">
+        <table className="w-full text-sm text-left text-slate-300">
+          <thead className="text-xs text-indigo-200 uppercase bg-gradient-to-r from-slate-900 to-slate-800 border-b border-indigo-500/30">
+            <tr>
+              <th className="px-5 py-4 border-r border-indigo-500/20 font-bold tracking-wider">Attack Class</th>
+              {models.map(m => (
+                <th key={m} className="px-5 py-4 text-center font-bold tracking-wider">{m}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {classes.map((cls, rowIdx) => {
+               const maxColValue = getMaxInClass(cls);
+               return (
+                <tr key={cls} className={`border-b border-indigo-500/10 ${rowIdx % 2 === 0 ? 'bg-slate-800/30' : 'bg-slate-900/30'} hover:bg-indigo-900/30 transition-colors duration-300`}>
+                  <td className="px-5 py-4 font-bold text-white border-r border-indigo-500/20">{cls}</td>
+                  {models.map(m => {
+                    const value = data[m][cls][metricIndex];
+                    const isBest = value === maxColValue && value > 0;
+                    return (
+                      <td key={m} className={`px-5 py-4 text-center transition-all duration-500 ${
+                        isBest 
+                          ? 'text-cyan-300 font-black bg-cyan-900/30 shadow-[inset_0_0_15px_rgba(34,211,238,0.2)]' 
+                          : 'text-slate-400 font-medium'
+                      }`}>
+                        {(value * 100).toFixed(2)}%
+                      </td>
+                    );
+                  })}
+                </tr>
+               );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
