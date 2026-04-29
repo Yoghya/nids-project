@@ -8,3 +8,4 @@ scipy
 pydantic
 pytest
 tinydb
+websockets

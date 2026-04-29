@@ -13,3 +13,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Light Mode Override via CSS Filter */
+html.theme-light {
+  filter: invert(1) hue-rotate(180deg);
+  background-color: #f8fafc;
+}
+
+/* Re-invert elements that shouldn't be color flipped (like images) */
+html.theme-light img, 
+html.theme-light video,
+html.theme-light .no-invert {
+  filter: invert(1) hue-rotate(180deg);
+}

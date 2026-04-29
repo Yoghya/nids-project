@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Shield, AlertTriangle, CheckCircle, Wifi, WifiOff } from 'lucide-react';
+import { WS_BASE_URL } from '../config';
 
 export default function MonitorPage() {
   const [predictionLogs, setPredictionLogs] = useState([]);
@@ -18,7 +19,7 @@ export default function MonitorPage() {
 
   const connectWebSocket = () => {
     setWsStatus('connecting');
-    const ws = new WebSocket('ws://192.168.1.4:8000/ws/monitor');
+    const ws = new WebSocket(`${WS_BASE_URL}/ws/monitor`);
 
     ws.onopen = () => {
       setWsStatus('connected');
@@ -65,15 +66,32 @@ export default function MonitorPage() {
     }
   };
 
+  // Class name constants
+  const pageContainerClass = "max-w-7xl mx-auto space-y-8 pb-10";
+  const headerCardClass = "bg-slate-900/40 backdrop-blur-xl border border-indigo-500/30 rounded-2xl p-8 relative shadow-[0_8px_30px_rgb(0,0,0,0.4)] overflow-hidden";
+  const headerTitleClass = "text-3xl font-black mb-2 flex items-center gap-3 text-white drop-shadow-md";
+  const statusConnectedClass = "bg-gradient-to-r from-emerald-600/30 to-cyan-600/30 text-emerald-300 border border-emerald-500/50";
+  const statusDisconnectedClass = "bg-gradient-to-r from-red-600/30 to-rose-600/30 text-red-300 border border-red-500/50";
+  
+  const btnBaseClass = "w-full md:w-auto px-8 py-4 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg relative z-10 hover:scale-105";
+  const btnActiveClass = `${btnBaseClass} bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white shadow-[0_0_20px_rgba(225,29,72,0.4)] border border-rose-400/50`;
+  const btnIdleClass = `${btnBaseClass} bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white shadow-[0_0_20px_rgba(79,70,229,0.4)] border border-cyan-400/50`;
+
+  const logCardClass = "bg-slate-900/40 backdrop-blur-xl p-8 rounded-2xl border border-indigo-500/20 shadow-[0_8px_30px_rgb(0,0,0,0.4)]";
+  const logItemBaseClass = "p-5 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center border transition-all duration-300 hover:scale-[1.01] shadow-md";
+  const logItemAlertClass = "bg-gradient-to-r from-rose-900/30 to-red-900/30 border-rose-500/40 shadow-[0_0_15px_rgba(225,29,72,0.15)]";
+  const logItemNormalClass = "bg-slate-800/40 border-indigo-500/20 hover:border-indigo-500/40";
+  const emptyStateClass = "flex flex-col items-center justify-center py-16 text-indigo-300/50 border border-indigo-500/20 border-dashed rounded-xl bg-slate-900/20";
+
   return (
-    <div className="max-w-7xl mx-auto space-y-8 pb-10">
-      <div className="bg-slate-900/40 backdrop-blur-xl border border-indigo-500/30 rounded-2xl p-8 relative shadow-[0_8px_30px_rgb(0,0,0,0.4)] overflow-hidden">
+    <div className={pageContainerClass}>
+      <div className={headerCardClass}>
         <div className="absolute -top-24 -right-24 w-64 h-64 bg-fuchsia-600/20 rounded-full blur-[80px] pointer-events-none"></div>
         <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-cyan-600/20 rounded-full blur-[80px] pointer-events-none"></div>
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center relative z-10">
           <div>
-            <h2 className="text-3xl font-black mb-2 flex items-center gap-3 text-white drop-shadow-md">
+            <h2 className={headerTitleClass}>
               <Shield className="text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]" size={32} /> 
               Real-time Node Monitor
             </h2>
@@ -85,9 +103,7 @@ export default function MonitorPage() {
           </div>
           <div className="mb-6 md:mb-0">
              <span className={`text-sm font-bold px-4 py-2 rounded-xl flex items-center gap-2 shadow-lg ${
-               wsStatus === 'connected' 
-                ? 'bg-gradient-to-r from-emerald-600/30 to-cyan-600/30 text-emerald-300 border border-emerald-500/50' 
-                : 'bg-gradient-to-r from-red-600/30 to-rose-600/30 text-red-300 border border-red-500/50'
+               wsStatus === 'connected' ? statusConnectedClass : statusDisconnectedClass
              }`}>
                 <div className={`w-2.5 h-2.5 rounded-full ${wsStatus === 'connected' ? 'bg-emerald-400 animate-pulse' : 'bg-red-500'}`}></div>
                 {wsStatus === 'connected' ? 'Connected' : wsStatus === 'connecting' ? 'Connecting...' : 'Disconnected'}
@@ -98,11 +114,7 @@ export default function MonitorPage() {
         <button 
           onClick={toggleScanning}
           disabled={wsStatus === 'connecting'}
-          className={`w-full md:w-auto px-8 py-4 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg relative z-10 ${
-            isScanning 
-              ? 'bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white shadow-[0_0_20px_rgba(225,29,72,0.4)] border border-rose-400/50 hover:scale-105'
-              : 'bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white shadow-[0_0_20px_rgba(79,70,229,0.4)] border border-cyan-400/50 hover:scale-105'
-          }`}
+          className={isScanning ? btnActiveClass : btnIdleClass}
         >
           {isScanning ? (
             <><WifiOff size={20} /> Terminate Packet Sniffer</>
@@ -112,7 +124,7 @@ export default function MonitorPage() {
         </button>
       </div>
 
-      <div className="bg-slate-900/40 backdrop-blur-xl p-8 rounded-2xl border border-indigo-500/20 shadow-[0_8px_30px_rgb(0,0,0,0.4)]">
+      <div className={logCardClass}>
          <div className="flex justify-between items-center mb-6 border-b border-indigo-500/20 pb-4">
            <h2 className="text-xl font-bold text-white flex items-center gap-3">
               <span className="relative flex h-4 w-4">
@@ -126,18 +138,16 @@ export default function MonitorPage() {
          
          <div className="space-y-4">
            {predictionLogs.length === 0 ? (
-             <div className="flex flex-col items-center justify-center py-16 text-indigo-300/50 border border-indigo-500/20 border-dashed rounded-xl bg-slate-900/20">
+             <div className={emptyStateClass}>
                 <Wifi size={48} className="opacity-30 mb-4" />
                 <p className="text-lg font-medium">No packets captured yet.</p>
                 <p className="text-sm mt-1">Initialize the sniffer to begin.</p>
              </div>
            ) : (
              predictionLogs.map((log) => (
-               <div key={log.id} className={`p-5 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center border transition-all duration-300 hover:scale-[1.01] shadow-md ${
-                 log.prediction !== 'Normal' 
-                  ? 'bg-gradient-to-r from-rose-900/30 to-red-900/30 border-rose-500/40 shadow-[0_0_15px_rgba(225,29,72,0.15)]' 
-                  : 'bg-slate-800/40 border-indigo-500/20 hover:border-indigo-500/40'
-               }`}>
+               <div key={log.id} className={`${logItemBaseClass} ${
+                 log.prediction !== 'Normal' ? logItemAlertClass : logItemNormalClass
+                }`}>
                  
                  <div className="flex gap-4 items-center w-full md:w-auto mb-4 md:mb-0">
                    {log.prediction !== 'Normal' ? (

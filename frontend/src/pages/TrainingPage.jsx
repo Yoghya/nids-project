@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
 import { Play, Database, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +16,7 @@ export default function TrainingPage() {
 
     try {
       const response = await axios.post(
-        'http://192.168.1.4:8000/api/train',
+        `${API_BASE_URL}/api/train`,
         {
           dataset_name: dataset
         }
