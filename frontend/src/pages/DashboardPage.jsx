@@ -7,9 +7,9 @@ import { MetricTable, AccuracyTable } from '../components/Tables';
 const DatasetSection = ({ datasetName, data }) => {
   if (!data) return null;
   
-  const sectionContainerClass = "bg-slate-900/50 backdrop-blur-xl p-8 rounded-2xl border border-indigo-500/20 shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:border-indigo-500/40 transition-all duration-500 relative overflow-hidden group";
+  const sectionContainerClass = "card card-hoverable";
   const sectionHoverBarClass = "absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-indigo-500 to-fuchsia-500 transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700";
-  const sectionTitleClass = "text-2xl font-black mb-6 flex gap-3 items-center text-white drop-shadow-md";
+  const sectionTitleClass = "title-tertiary";
   const sectionTitleBarClass = "w-2 h-8 bg-gradient-to-b from-cyan-400 to-indigo-600 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]";
 
   return (
@@ -86,15 +86,14 @@ export default function DashboardPage() {
     handleCompare();
   }, []);
 
-  const pageContainerClass = "space-y-8 max-w-7xl mx-auto pb-10";
+  const pageContainerClass = "page-container";
   const heroBannerClass = "relative rounded-3xl overflow-hidden shadow-[0_0_40px_rgba(79,70,229,0.3)] border border-indigo-500/30 group h-64";
   const heroOverlayClass = "absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent z-10";
   const heroContentClass = "absolute bottom-0 left-0 w-full p-8 z-20 flex flex-col md:flex-row justify-between items-end";
   const heroTitleClass = "text-4xl font-black text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)] mb-2 flex items-center gap-3";
   
-  const btnBaseClass = "mt-6 md:mt-0 px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-3 transition-all duration-300 shadow-lg";
-  const btnSyncingClass = `${btnBaseClass} bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700`;
-  const btnIdleClass = `${btnBaseClass} bg-gradient-to-r from-fuchsia-600 to-indigo-600 hover:from-fuchsia-500 hover:to-indigo-500 text-white shadow-[0_0_20px_rgba(192,38,211,0.4)] border border-fuchsia-400/50 hover:scale-105 hover:-translate-y-1`;
+  const btnSyncingClass = "btn-disabled";
+  const btnIdleClass = "btn-primary";
 
   const gridContainerClass = "grid grid-cols-1 xl:grid-cols-2 gap-8 items-start";
   const emptyStateClass = "flex flex-col items-center justify-center py-24 text-slate-500 bg-slate-900/30 backdrop-blur-md rounded-3xl border border-indigo-500/20 border-dashed shadow-[0_0_30px_rgba(0,0,0,0.2)]";

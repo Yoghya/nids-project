@@ -17,18 +17,18 @@ export default function OptimizationInsightsPage() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 pb-10">
+    <div className="page-container">
       
-      <div className="bg-slate-900/40 backdrop-blur-xl p-10 rounded-3xl border border-indigo-500/20 shadow-[0_8px_30px_rgb(0,0,0,0.4)] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-fuchsia-600/10 rounded-full blur-[80px] pointer-events-none"></div>
+      <div className="card">
+        <div className="bg-glow-fuchsia"></div>
 
-        <h2 className="text-3xl font-black mb-4 flex items-center gap-4 text-white drop-shadow-md relative z-10">
-          <div className="p-3 bg-gradient-to-br from-indigo-500 to-fuchsia-500 rounded-xl shadow-lg">
+        <h2 className="title-secondary">
+          <div className="icon-box-fuchsia">
              <TrendingUp className="text-white" size={28} />
           </div>
           Hybrid CSA-PSO Convergence
         </h2>
-        <p className="text-indigo-200 text-sm mb-8 leading-relaxed max-w-4xl relative z-10">
+        <p className="text-muted">
           Comparing the fitness convergence rate of the standard Crow Search Algorithm (CSA) vs the novel Hybrid CSA-PSO approach.
           The hybrid approach clearly demonstrates faster local exploitation (PSO) after global exploration (CSA).
         </p>
@@ -51,19 +51,19 @@ export default function OptimizationInsightsPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="bg-slate-900/40 backdrop-blur-xl p-8 rounded-2xl border border-indigo-500/20 shadow-lg relative overflow-hidden group">
+        <div className="card-sm card-hoverable group">
           <div className="absolute top-0 left-0 w-1 h-full bg-cyan-400"></div>
           <h3 className="text-cyan-400 text-xs font-black uppercase tracking-widest mb-3">C (Regularization)</h3>
           <p className="text-5xl font-black text-white drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">12.4</p>
           <p className="text-xs text-indigo-300 mt-3 font-semibold">Optimized via PSO refine step</p>
         </div>
-        <div className="bg-slate-900/40 backdrop-blur-xl p-8 rounded-2xl border border-indigo-500/20 shadow-lg relative overflow-hidden group">
+        <div className="card-sm card-hoverable group">
           <div className="absolute top-0 left-0 w-1 h-full bg-fuchsia-400"></div>
           <h3 className="text-fuchsia-400 text-xs font-black uppercase tracking-widest mb-3">σ (Kernel Width)</h3>
           <p className="text-5xl font-black text-white drop-shadow-[0_0_10px_rgba(192,38,211,0.3)]">0.85</p>
           <p className="text-xs text-indigo-300 mt-3 font-semibold">Optimized via PSO refine step</p>
         </div>
-        <div className="bg-slate-900/40 backdrop-blur-xl p-8 rounded-2xl border border-indigo-500/20 shadow-lg relative overflow-hidden group">
+        <div className="card-sm card-hoverable group">
           <div className="absolute top-0 left-0 w-1 h-full bg-emerald-400"></div>
           <h3 className="text-emerald-400 text-xs font-black uppercase tracking-widest mb-3">ε (Tube Size)</h3>
           <p className="text-5xl font-black text-white drop-shadow-[0_0_10px_rgba(16,185,129,0.3)]">0.01</p>

@@ -67,17 +67,16 @@ export default function MonitorPage() {
   };
 
   // Class name constants
-  const pageContainerClass = "max-w-7xl mx-auto space-y-8 pb-10";
-  const headerCardClass = "bg-slate-900/40 backdrop-blur-xl border border-indigo-500/30 rounded-2xl p-8 relative shadow-[0_8px_30px_rgb(0,0,0,0.4)] overflow-hidden";
-  const headerTitleClass = "text-3xl font-black mb-2 flex items-center gap-3 text-white drop-shadow-md";
+  const pageContainerClass = "page-container";
+  const headerCardClass = "card card-hoverable";
+  const headerTitleClass = "title-secondary";
   const statusConnectedClass = "bg-gradient-to-r from-emerald-600/30 to-cyan-600/30 text-emerald-300 border border-emerald-500/50";
   const statusDisconnectedClass = "bg-gradient-to-r from-red-600/30 to-rose-600/30 text-red-300 border border-red-500/50";
   
-  const btnBaseClass = "w-full md:w-auto px-8 py-4 rounded-xl font-bold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg relative z-10 hover:scale-105";
-  const btnActiveClass = `${btnBaseClass} bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-500 hover:to-rose-600 text-white shadow-[0_0_20px_rgba(225,29,72,0.4)] border border-rose-400/50`;
-  const btnIdleClass = `${btnBaseClass} bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white shadow-[0_0_20px_rgba(79,70,229,0.4)] border border-cyan-400/50`;
+  const btnActiveClass = "btn-danger w-full md:w-auto px-8 py-4";
+  const btnIdleClass = "btn-primary w-full md:w-auto px-8 py-4";
 
-  const logCardClass = "bg-slate-900/40 backdrop-blur-xl p-8 rounded-2xl border border-indigo-500/20 shadow-[0_8px_30px_rgb(0,0,0,0.4)]";
+  const logCardClass = "card";
   const logItemBaseClass = "p-5 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center border transition-all duration-300 hover:scale-[1.01] shadow-md";
   const logItemAlertClass = "bg-gradient-to-r from-rose-900/30 to-red-900/30 border-rose-500/40 shadow-[0_0_15px_rgba(225,29,72,0.15)]";
   const logItemNormalClass = "bg-slate-800/40 border-indigo-500/20 hover:border-indigo-500/40";
@@ -86,8 +85,8 @@ export default function MonitorPage() {
   return (
     <div className={pageContainerClass}>
       <div className={headerCardClass}>
-        <div className="absolute -top-24 -right-24 w-64 h-64 bg-fuchsia-600/20 rounded-full blur-[80px] pointer-events-none"></div>
-        <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-cyan-600/20 rounded-full blur-[80px] pointer-events-none"></div>
+        <div className="bg-glow-fuchsia top-[-6rem] right-[-6rem]"></div>
+        <div className="bg-glow-cyan bottom-[-6rem] left-[-6rem]"></div>
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center relative z-10">
           <div>

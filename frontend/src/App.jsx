@@ -56,7 +56,7 @@ function AppContent() {
       <aside className={sidebarClass}>
         <div className="p-8 border-b border-indigo-500/20 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 to-fuchsia-600/20 z-0"></div>
-          <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-400 flex items-center gap-3 relative z-10 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
+          <h1 className="title-secondary !mb-0 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-fuchsia-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.3)]">
             <ShieldAlert className="text-fuchsia-500" size={32} />
             NIDS-Opt
           </h1>

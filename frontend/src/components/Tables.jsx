@@ -26,15 +26,15 @@ export const MetricTable = ({ title, metricIndex, data }) => {
   };
 
   return (
-    <div className="bg-slate-900/40 backdrop-blur-md p-5 rounded-xl border border-indigo-500/20 shadow-lg">
+    <div className="card-sm">
       <h4 className="text-sm font-black mb-4 text-fuchsia-400 uppercase tracking-widest drop-shadow-[0_0_8px_rgba(192,38,211,0.5)]">{title} Matrix</h4>
-      <div className="overflow-x-auto rounded-lg border border-indigo-500/20 custom-scrollbar">
-        <table className="w-full text-sm text-left text-slate-300">
-          <thead className="text-xs text-indigo-200 uppercase bg-gradient-to-r from-slate-900 to-slate-800 border-b border-indigo-500/30">
+      <div className="table-wrapper">
+        <table className="table-base">
+          <thead className="table-header-row">
             <tr>
-              <th className="px-5 py-4 border-r border-indigo-500/20 font-bold tracking-wider">Attack Class</th>
+              <th className="table-th border-r border-indigo-500/20">Attack Class</th>
               {models.map(m => (
-                <th key={m} className="px-5 py-4 text-center font-bold tracking-wider">{m}</th>
+                <th key={m} className="table-th text-center">{m}</th>
               ))}
             </tr>
           </thead>
@@ -42,13 +42,13 @@ export const MetricTable = ({ title, metricIndex, data }) => {
             {classes.map((cls, rowIdx) => {
                const maxColValue = getMaxInClass(cls);
                return (
-                <tr key={cls} className={`border-b border-indigo-500/10 ${rowIdx % 2 === 0 ? 'bg-slate-800/30' : 'bg-slate-900/30'} hover:bg-indigo-900/30 transition-colors duration-300`}>
-                  <td className="px-5 py-4 font-bold text-white border-r border-indigo-500/20">{cls}</td>
+                <tr key={cls} className={`table-row ${rowIdx % 2 === 0 ? 'table-row-even' : 'table-row-odd'}`}>
+                  <td className="table-td font-bold text-white border-r border-indigo-500/20">{cls}</td>
                   {models.map(m => {
                     const value = data[m][cls][metricIndex];
                     const isBest = value === maxColValue && value > 0;
                     return (
-                      <td key={m} className={`px-5 py-4 text-center transition-all duration-500 ${
+                      <td key={m} className={`table-td text-center ${
                         isBest 
                           ? 'text-cyan-300 font-black bg-cyan-900/30 shadow-[inset_0_0_15px_rgba(34,211,238,0.2)]' 
                           : 'text-slate-400 font-medium'
@@ -78,7 +78,7 @@ export const AccuracyTable = ({ data }) => {
   }));
 
   return (
-    <div className="bg-slate-900/40 backdrop-blur-md p-6 rounded-xl border border-indigo-500/20 shadow-lg mb-2">
+    <div className="card-sm mb-2">
       <h4 className="text-sm font-black mb-6 text-cyan-400 uppercase tracking-widest drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">Accuracy Matrix</h4>
       <div className="h-80 w-full">
         <ResponsiveContainer width="100%" height="100%">

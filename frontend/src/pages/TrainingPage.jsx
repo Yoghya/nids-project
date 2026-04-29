@@ -37,15 +37,15 @@ export default function TrainingPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-8 pb-10">
-      <div className="bg-slate-900/40 backdrop-blur-xl p-10 rounded-3xl border border-indigo-500/20 shadow-[0_10px_40px_rgb(0,0,0,0.3)] relative overflow-hidden">
+    <div className="page-container max-w-3xl">
+      <div className="card">
 
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-cyan-400 via-indigo-500 to-fuchsia-500"></div>
-        <div className="absolute -left-32 -top-32 w-64 h-64 bg-fuchsia-600/10 rounded-full blur-[60px] pointer-events-none"></div>
+        <div className="bg-glow-fuchsia top-[-8rem] left-[-8rem]"></div>
 
-        <h2 className="text-2xl font-black text-white mb-8 flex items-center gap-3 drop-shadow-md">
-          <div className="p-2 bg-gradient-to-br from-indigo-500 to-cyan-500 rounded-lg shadow-lg">
+        <h2 className="title-tertiary">
+          <div className="icon-box">
             <Database className="text-white" size={24} />
           </div>
           Model Training Configuration
@@ -90,8 +90,7 @@ export default function TrainingPage() {
           <button
             onClick={handleTrain}
             disabled={status === 'running'}
-            className="w-full py-5 rounded-xl font-black text-lg flex justify-center items-center gap-3 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.5)] border disabled:opacity-50
-              bg-gradient-to-r from-fuchsia-600 via-indigo-600 to-cyan-600 hover:bg-gradient-to-l hover:scale-[1.02] border-indigo-400/50 text-white"
+            className="btn-primary w-full py-5 text-lg"
           >
             {status === 'running' ? (
               <>
